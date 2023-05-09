@@ -1,0 +1,107 @@
+/* importacion info CSS de la NAvBar y del Footer*/
+@import "navBar";
+@import "footer";
+
+
+/*Seteo que aplica a todas las webs*/
+*{margin:0;
+padding:0;
+box-sizing: border-box;
+font-family: 'Poppins', sans-serif;
+}
+
+/*Margen para que la web no quede oculta en la navbar o en el footer*/
+.inicio{padding-top: 50px;
+    padding-bottom: 50px;}
+
+
+/* color elegido por la marca para los titulos*/
+h1, h2,  h3, h5, h4, h6{
+    color:Black;
+}
+h1 {font-weight: 600;}
+
+.corvette {background-image: url("../img/fondo.gif");
+width:100%;
+}
+
+.row {margin-left: 0px;
+margin-right: 0px;}
+
+/*cambio de los valores de btn_primary para usar los de la marca*/
+.btn-secondary{
+    border:0px;
+    &:hover {background-color: rgb(255, 218, 224);}
+}
+
+/*formato formularios*/
+input[type=number],[type=text],[type=email],textarea {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 0px 20px 12px 0px;
+    display: inline-block;
+    border: 2px solid #ccc;
+    box-sizing: border-box;
+}
+  
+textarea {
+height: 100px;
+box-sizing: border-box;
+resize: none;
+}
+  
+input[type=text],[type=email],textarea:focus {outline-color: #D77948;}
+
+.formulario, .acerca {padding: 20px;}
+
+
+/*animacion Van y texto*/
+@keyframes Van {
+0%   {left:0px; top:0px;}
+100% {left:45vw; top:0px; }
+}
+@keyframes textoVan {
+    0%   {opacity: 0;}
+    90%   {opacity: 0;}
+    100% {opacity: 1;}
+  }
+
+/* Elemento al que se le aplica la animacion*/
+#containerAnimacion .van {
+position: relative;
+animation-name: Van;
+animation-duration: 5s;
+animation-play-state:p;
+animation-iteration-count: 1;
+animation-fill-mode: forwards;
+padding-bottom: 50px;
+}
+#containerAnimacion .textoVan{
+    position: relative;
+    animation-name: textoVan;
+    animation-duration: 3s;
+    animation-play-state:running; 
+    animation-fill-mode:forwards;
+    animation-iteration-count: 1;
+}
+
+.row {margin:0;
+padding:0;}
+
+.textoVan{opacity:0;
+    display: flex;
+    text-align: right;
+}
+
+/* formato para mensajes debajo de mapa y formulario*/
+legend {font-size: 1.25rem;}
+/* Margenes usdos en varias paginas para que no queden ocultos o pegados a la barra de nav o al pie de pagina*/
+.cards {margin-bottom: 50px;}
+.caruselTrabajos{padding-top: 50px;
+    margin-bottom: 100px;
+padding-left: 20px;}
+.contacto{padding-top: 30px;}
+.formulario{margin-bottom: 100px;}
+
+
+#inicio {color:rgb(255, 255, 255);}

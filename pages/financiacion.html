@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FUENTE -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <!-- BOOTSTRAP CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">    
+    <!-- Page icon -->
+    <link rel="shortcut icon" href="../img/logo.png" type="image/svg" />
+    <!-- MI CSS -->
+    <link rel="stylesheet" href="../css/style.css" />
+    <title>Automotora Martinez - Financiacion</title>
+    <meta name="description" content="Financiaciones.">
+    <meta name="keywords" cotent="" >
+</head>
+
+
+<body onload="financiacion()">
+    <nav class="navbar navbar-expand-lg shadow sticky-top">
+      <div class="container-fluid">
+          <a class="navbar-brand" href="#">
+              <img src="../img/logo.png"  height="50" class="d-inline-block align-top" alt="Martinez Automoviles">
+          </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse " id="navbarNav">
+              <ul class="navbar-nav ms-auto">
+                  <li class="nav-item badge">
+                      <a class="nav-link" href="../index.html">  Inicio  </a>
+                  </li>
+                  <li class="nav-item badge">
+                      <a class="nav-link" href="productos.html">Vehiculos
+                      </a>
+                  </li>
+                  <li class="nav-item badge active" >
+                    <a class="nav-link" href="financiacion.html">Financiaciones</a>
+                </li>
+                  <li class="nav-item badge" >
+                      <a class="nav-link" href="contacto.html">Contacto</a>
+                  </li>
+                  <li class="nav-item badge">
+                    <a class="nav-link" href="admin.html">Admin</a>
+                </li>
+              </ul>
+          </div>
+      </div>
+  </nav>  
+    <section class="bg-light pt-5 pb-5 shadow-sm cards">
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <h1 class="text-uppercase border-bottom mb-4">Calculo y solicitudes de financiacion</h1>
+          </div>
+        </div>
+        <div class="financiacion" >
+            <form id="formularioFinanciacion">
+                <label for="precio">Precio Auto:</label><br>
+                <input type="number" id="precio" name="precio" disabled="disabled"><br>
+                <label for="monto" id="montolabel"></label><br>
+                <input type="number" id="monto" name="monto">
+                <label for="meses">Cantidad de meses a financiar (No mayor a 24):</label><br>
+                <input type="number" id="meses" name="meses">
+                <button type="button" value="Calcular" onclick="calculoFinanciacion()">Calcular</button>
+              </form>
+              <div class="error"></div>
+              <div class="resultado"></div>
+        </div>
+    </section>
+ 
+
+    <!--FOOTER-->
+    <footer class="col-md-12 w-100 footer fixed-bottom">
+      <div class="footer-bottom text-center">
+          &copy; Copyright 2021 | Creada por
+          <a target="_blank" href="https://github.com/ggrezzi">PIPI Design</a>
+          </div>
+      </div>
+
+  </footer>
+    
+    <!-- BOOTSTRAP JAVASCRIPT FILE -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    <script src="../scripts/scripts.js"></script>
+</body>
+</html>

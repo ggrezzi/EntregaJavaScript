@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FUENTE -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <!-- BOOTSTRAP CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">    
+    <!-- Page icon -->
+    <link rel="shortcut icon" href="../img/logo.png" type="image/svg" />
+    <!-- MI CSS -->
+    <link rel="stylesheet" href="../css/style.css" />
+    <title>Automotora Martinez - Contacto</title>
+    <meta name="description" content="Formulario de Contacto y Mapa.">
+    <meta name="keywords" cotent="" >
+</head>
+<body >
+    <nav class="navbar navbar-expand-lg shadow sticky-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <img src="../img/logo.png"  height="50" class="d-inline-block align-top" alt="Martinez Automoviles">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse " id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item badge">
+                        <a class="nav-link" href="../index.html">  Inicio  </a>
+                    </li>
+                    <li class="nav-item badge">
+                        <a class="nav-link" href="productos.html">Vehiculos
+                        </a>
+                    </li>
+                    <li class="nav-item badge" >
+                        <a class="nav-link" href="financiacion.html">Financiaciones</a>
+                    </li>
+                    <li class="nav-item badge active" >
+                        <a class="nav-link" href="contacto.html">Contacto</a>
+                    </li>
+                    <li class="nav-item badge">
+                      <a class="nav-link" href="admin.html">Admin</a>
+                  </li>
+                </ul>
+            </div>
+        </div>
+    </nav>  
+
+
+    <div class="col-md-12 text-center contacto"> <h1>Contacto</h1> </div>
+    <div class="row w-100 justify-content-center formulario">
+        <div class="col-md-6" id="formulario"> 
+            <form action="https://formsubmit.co/gabrielgrezzi@gmail.com" method="post" name="formulario">
+            <label for="name">Nombre:</label> 
+            <input type="text" name="name" id="name" /><br>
+            <label for="mail">Email: </label> 
+            <input type="email" name="email" id="mail" /><br>
+            <label for="msg">Mensaje: </label> 
+            <textarea id="msg" name="message"></textarea>
+            <legend>¿Deseas recibir novedades por mail?</legend>
+            <label>Sí</label> <input type="radio" name="Novedades" value="Si" checked/>
+            <label>No</label> <input type="radio" name="Novedades" value="No"><br> 
+            <input type="submit" value="Enviar" class="btn btn-secondary mt-auto align-self-start"/>
+            </form>
+        </div>
+
+        <!--Mapa-->
+        <div class="col-md-6 mapa justify-content-center">
+            <iframe class="w-100" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d209592.3772727854!2d-56.33755747972858!3d-34.83408703524493!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x959f80ffc63bf7d3%3A0x6b321b2e355bec99!2sMontevideo%2C%20Montevideo%20Department!5e0!3m2!1sen!2suy!4v1678302661778!5m2!1sen!2suy" width="600" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            <legend class="textoVan justify-content-center">Envios dentro de Montevideo o al interior por agencias</legend>   
+        </div>	
+    </div>
+
+    <!--FOOTER-->
+    <footer class="col-md-12 w-100 footer fixed-bottom mt-auto">
+        <div class="footer-bottom text-center">
+            &copy; Copyright 2021 | Creada por
+            <a href="https://github.com/ggrezzi" target="_blank">PIPI Design</a>
+            </div>
+        </div>
+
+    </footer>
+    
+    <!-- BOOTSTRAP JAVASCRIPT FILE -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+</body>
+</html>
