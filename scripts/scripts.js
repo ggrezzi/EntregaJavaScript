@@ -16,7 +16,7 @@ class Autos {
 
 // inicializando las variables que voy a estar usando a lo largo de todo el codigo.
 let listaAutos=[];
-let code="";
+let code=""; 
 
 
 function inicio(){
