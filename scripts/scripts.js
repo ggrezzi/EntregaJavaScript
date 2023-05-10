@@ -70,7 +70,7 @@ function agregarAuto(){
                     ano = form.elements[index].value;
                     break;
             case "km":
-                km = form.elements[index].value;  //Debe ser parseint?
+                km = form.elements[index].value;
                 break;
             case "precio":
                 precio = form.elements[index].value;
@@ -80,6 +80,7 @@ function agregarAuto(){
                 break;
             case "fotos":
                 tempfotos = form.elements[index].value;
+                alert(tempfotos);
                 break;
         
             default:
