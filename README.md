@@ -12,6 +12,8 @@
 <body>
     <p><h1>Entrega trabajo practico Jevascript</h1></p>
     <p>Trabajo simulacion pagina web de una automotora. Realizado en Javascript, HTML y CSS.</p>
-    <img src="img/screenshot.png" alt="">
+    <p>Cada auto es un objeto con sus propiedades: Marca, Modelo, Color, Kilometraje, Precio, Año, Descipcion y Fotos (las que se muestran en el carusel)</p>
+    <img src="img/screenshot.png" alt="Captura de pantalla Principal">
+    <img src="img/screenshot1.png" alt="Captura de venta de Autos">
 </body>
 </html>
