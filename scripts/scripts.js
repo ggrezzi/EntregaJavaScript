@@ -1,14 +1,17 @@
 
 class Autos {
     //Clase Autos. Sera la clase de mis objetos autos.
-    constructor (marca,modelo,color,ano,km,precio,texto,fotos=[]){
+
+    constructor (id,marca,modelo,color,ano,km,precio,descripcion,idEmpresa,fotos=[]){
+        this.id=id;
         this.marca=marca;
         this.modelo=modelo;
         this.color=color;
         this.ano=ano;
         this.km=km;
         this.precio=precio;
-        this.texto=texto;
+        this.descripcion=descripcion;
+        this.idEmpresa=idEmpresa;
         this.fotos=fotos; //--> Array con los nombres de las fotos
     }
 
@@ -18,9 +21,11 @@ class Autos {
 let listaAutos=[];
 let code=""; 
 
-
+/*
 function inicio(){
     //funcion que reinicia la lista de autos (lo ideal seria sacar esta info de una DB,)
+    //Esta funcion ya no es necesaria. La dejo comentada para no borrar trabajo hecho para entregas
+    //anteriores.
     listaAutos=JSON.parse(localStorage.getItem("lista"));
     console.log(listaAutos);
     if (listaAutos==null){
@@ -48,12 +53,18 @@ function inicio(){
     console.log(listaAutos);
     localStorage.setItem("lista",JSON.stringify(listaAutos));
 }
-
+*/
 
 function agregarAuto(){
-    //Funcion para agregar autos al array listaAutos.
-    //Agarramos toda la informacio del formulario presentado.
     
+    //Funcion para agregar autos a la base de datos.
+    //Agarramos toda la informacio del formulario presentado.
+    //el ID del auto lo creo con valor 0 ya que ese se numera automaticamente
+    //al instertar el auto en la DB.
+    //El valor de IdEmpresa lo fuerzo a que sea 1 ya que es la unica empresa
+    //con la que por ahora estamos trabajando. (La idea gral es que este backend y DB pueda ser
+    //usada por otras automotoras para luego crear una web interactiva)
+
     let form = document.getElementById("agregarVehiculo");
     for (let index = 0; index < form.length; index++) {
         switch (form.elements[index].name) {
@@ -67,8 +78,8 @@ function agregarAuto(){
                 color = form.elements[index].value;
                 break;
             case "ano":
-                    ano = form.elements[index].value;
-                    break;
+                ano = form.elements[index].value;
+                break;
             case "km":
                 km = form.elements[index].value;
                 break;
@@ -80,47 +91,74 @@ function agregarAuto(){
                 break;
             case "fotos":
                 tempfotos = form.elements[index].value;
-                alert(tempfotos);
-                break;
-        
+                break;    
             default:
                 break;
         }
     }
-
     fotos = [];
     //tomando el nombre generico de las fotos, le agrego un indice al final del nombre pero antes de la extencion
     let comienzoExt = tempfotos.indexOf(".");
     for (let i = 1; i <= 6; i++) {
         fotos.push(tempfotos.substr(0,(comienzoExt))+i+tempfotos.substr(comienzoExt,(tempfotos.length-1)));        
     }
-    //Agregando el nuevo objeto al array listaAutos
-    const autoNuevo = new Autos(marca, modelo, color, ano,km, precio, texto,fotos);
-    listaAutos.push(autoNuevo); 
+
+    //Agregando el nuevo objeto a la base de datos usando uan API POST
+
+    const autoNuevo = new Autos(0,marca, modelo, color, ano,km, precio, texto,1,fotos);
+    console.log("Este es el auto nuevo:");
+    console.log(autoNuevo)
+    console.log("id empresa")
+    console.log(autoNuevo.idEmpresa);
+    var xhr = new XMLHttpRequest();
+    var url = "https://localhost:5001/api/Auto/add";
+    xhr.open("POST", url, true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    console.log("xhr readyState")
+    console.log(xhr.readyState);
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 ) {
+            console.log(xhr.status);
+            console.log(xhr.responseText);
+            //var json = JSON.parse(xhr.responseText);
+        }
+    };
+    var data = JSON.stringify(autoNuevo);
+    console.log("data");
+    console.log(data);
+    xhr.send(data);
+
+    //Aviso que el auto fue agregado satisfactoriamente a la base de datos.
+    //No controlo si la API devuelve True or False ya que controlo todos los campos con javascript.
+
     newElement = document.createElement("p");
     newElement.setAttribute("id","textoAceptar")
     document.getElementById("agregarVehiculo").appendChild(newElement);
     document.getElementById("textoAceptar").innerHTML="El nuevo Vehiculo ha sido agregado";
 
-    form = document.getElementById("agregarVehiculo");
-    //limpio el formulario
-    for (let index = 0; index < form.length; index++) {
-        form.elements[index].value="";  
-    }
-    localStorage.setItem("lista",JSON.stringify(listaAutos));
+    
+    document.getElementById("accion").value="opcion";
+    getAuto();
+
 }
 
-function quitarVehiculo(){
-    //borrando el vehiculo seleccionado en el formulario
-    listaAutos=JSON.parse(localStorage.getItem("lista"));
-    let nroVehiculo = document.getElementById("seleccionVehiculo").value;
-    listaAutos.splice(nroVehiculo,1);
-    localStorage.setItem("lista",JSON.stringify(listaAutos));
-}
 
-function habilitarPrecio(){
+function  quitarVehiculo () {
 
-
+    //Quitamos el Auto seleccionado de la DB mandando el ID del mismo.
+    //en la API directo quitamos tambien las fotos.
+    let nroVehiculo=parseInt(document.getElementById("seleccionVehiculo").value);
+    fetch('https://localhost:5001/api/Auto/' + nroVehiculo,  {
+      method: 'DELETE'
+    })
+    limpiarTemporal();
+    newElement =  document.createElement("p") ;
+    newElement.setAttribute("id","textoMensaje");
+    document.getElementById("temporal").appendChild(newElement);
+    document.getElementById("textoMensaje").innerHTML="Vehiculo borrado";
+    getAuto();
+    document.getElementById("accion").value="opcion";
+    getAuto();
 }
 
 function calculoFinanciacion(){
@@ -165,12 +203,28 @@ function calculoFinanciacion(){
 }
 
 
+const getAuto = async () => {
+    //funcion para recuperar la lista de autos desde la DB.
+    //enviamos el IdEmpresa (en este caso 1) y recibimos todos los autos de la misma.
+    listaAutos=[];
+    const resp = await fetch('https://localhost:5001/api/Auto/1');
+    listaAutos = await resp.json();
+    console.log("Lista de autos conseguidas por JSON:")
+    console.log(listaAutos)
+    console.log(window.location.href);
+    if (window.location.href.indexOf('productos.html')>0){
+    cargarAutos()}
+}
+
+
+
+
 
 function cargarAutos(){
     //funcion que carga todas las cards de cada auto en el array listaAutos
     row=0;
     // recobrando la lista del localStorage para no perder los autos agregados.
-    listaAutos=JSON.parse(localStorage.getItem("lista"));
+    //listaAutos=JSON.parse(localStorage.getItem("lista"));
     for (let index = 0; index < listaAutos.length; index++) {
         const tempAuto = listaAutos[index];
         //me agrego una ROW por cada 3 autos ya que cada tarjeta ocupa 4 cols de las 12 que van por pagina.
@@ -279,7 +333,7 @@ function cargarAutos(){
         newElement.classList.add("mb-4");
         newElement.setAttribute("id","datosAuto"+index);
         document.getElementById("texto"+index).appendChild(newElement);
-        document.getElementById("datosAuto"+index).innerHTML="Color: "+tempAuto.color+"<br>Año: "+tempAuto.ano+"<br>KM: "+tempAuto.km+"<br>Precio: "+tempAuto.precio+"<br>"+tempAuto.texto;
+        document.getElementById("datosAuto"+index).innerHTML="Color: "+tempAuto.color+"<br>Año: "+tempAuto.ano+"<br>KM: "+tempAuto.km+"<br>Precio: "+tempAuto.precio+"<br>"+tempAuto.descripcion;
         newElement =  document.createElement("a");
         newElement.setAttribute("target","_blank");
         newElement.setAttribute("href","https://wa.me/+59898344452?text=Hola.%20Quisiera%20mas%20informacion%20sobre%20el%20auto%20"+tempAuto.marca+"%20modelo"+tempAuto.modelo+"%20Desde%20ya%20muchas%20gracias");
@@ -311,8 +365,6 @@ function limpiar(){
     listaAutos=null;
     localStorage.setItem("lista",JSON.stringify(listaAutos));
     console.log(listaAutos);
-    inicio();
-
 }
 
 
@@ -343,14 +395,10 @@ function formAdmin(){
     switch (opcion) {
         case "opcion":
             limpiarTemporal();
-
-      
             break;
     
         case "agregar":
             limpiarTemporal();
-
-
             newElement =  document.createElement("form") ;
             newElement.classList.add("agregarVehiculo");
             newElement.setAttribute("id","agregarVehiculo");
@@ -517,22 +565,22 @@ function formAdmin(){
             newElement.setAttribute("id","seleccionVehiculo");
             document.getElementById("quitarVehiculo").appendChild(newElement);
 
-            listaAutos=JSON.parse(localStorage.getItem("lista"));
-
             for (let index = 0; index < listaAutos.length; index++) {
                 const element = listaAutos[index];
                 newElement =  document.createElement("option") ;
-                newElement.setAttribute("value",index);
+                newElement.setAttribute("value",element.id);
                 newElement.setAttribute("id","auto"+index);
                 document.getElementById("seleccionVehiculo").appendChild(newElement);
                 document.getElementById("auto"+index).innerHTML=element.marca+" "+element.modelo+" "+element.color;
             }
+
             newElement =  document.createElement("br") ;
             document.getElementById("quitarVehiculo").appendChild(newElement);
             newElement =  document.createElement("button") ;
             newElement.setAttribute("type","button");
             newElement.setAttribute("value","quitarVehiculo");
-            newElement.setAttribute("onclick","quitarVehiculo(),limpiarTemporal()");
+            //newElement.setAttribute("onclick","quitarVehiculotest()");
+            //newElement.setAttribute("onclick","test()");
             newElement.setAttribute("id","botonQuitarVehiculo");
             document.getElementById("quitarVehiculo").appendChild(newElement);
             document.getElementById("botonQuitarVehiculo").innerHTML="Borrar auto seleccionado";
@@ -543,6 +591,7 @@ function formAdmin(){
             newElement.setAttribute("id","cancelar");
             document.getElementById("quitarVehiculo").appendChild(newElement);
             document.getElementById("cancelar").innerHTML="Cancelar";
+            document.getElementById("botonQuitarVehiculo").addEventListener("click", quitarVehiculo)
             break;
     
         case "limpiar":

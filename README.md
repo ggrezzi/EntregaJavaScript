@@ -10,9 +10,9 @@
 
 </head>
 <body>
-    <p><h1>Entrega trabajo practico Jevascript</h1></p>
+    <p><h1>Entrega trabajo practico Javascript</h1></p>
     <p>Trabajo simulacion pagina web de una automotora. Realizado en Javascript, HTML y CSS.</p>
-    <p>Cada auto es un objeto con sus propiedades: Marca, Modelo, Color, Kilometraje, Precio, Año, Descipcion y Fotos (las que se muestran en el carusel)</p>
+    <p>Cada auto es un objeto con sus propiedades: Marca, Modelo, Color, Kilometraje, Precio, Año, Descripcion y Fotos (las que se muestran en el carrusel)</p>
     <img src="img/screenshot.png" alt="Captura de pantalla Principal">
     <img src="img/screenshot1.png" alt="Captura de venta de Autos">
 </body>
