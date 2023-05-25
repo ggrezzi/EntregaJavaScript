@@ -226,7 +226,7 @@ const getAuto = async () => {
 function cargarAutos(){
     //funcion que carga todas las cards de cada auto en el array listaAutos
     row=0;
-    fetchP();
+    
     // recobrando la lista del localStorage para no perder los autos agregados.
     //listaAutos=JSON.parse(localStorage.getItem("lista"));
     for (let index = 0; index < listaAutos.length; index++) {
@@ -643,13 +643,21 @@ function limpiarTemporal(){
 }
 
 
-function fetchAutos(){
-    listaAutos = document.querySelector
+
+function fetchP(){
+    
+    //no tiene www. o https quiere decir que es una ruta relativa en local
     fetch('data.json')
-        .then((res)=>res.json())
-        .then((data)=> {
-            data.foreach((vehiculo)=>{
-                listaAutos.add(vehiculo);
+        .then( (res) => res.json())
+        //cuando yo ya recuperé el texto y lo convertí en objeto nuevamente (res.json)
+        .then( (res) => {
+            res.forEach((producto) => {
+                listaAutos.push(producto);
             })
         })
+
+        listaAutos.forEach(element => {
+            console.log(element);
+        });
+    cargarAutos();
 }
