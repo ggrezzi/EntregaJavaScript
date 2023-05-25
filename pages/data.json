@@ -1,0 +1,42 @@
+[
+    {
+      "id": 27,
+      "marca": "Chevrolet",
+      "modelo": "BelAir",
+      "color": "Beige",
+      "ano": 1956,
+      "km": 1712781,
+      "precio": 12900,
+      "descripcion": "Inmaculado",
+      "idEmpresa": 1,
+      "fotos": [
+        "BelAir1.webp",
+        "BelAir2.webp",
+        "BelAir3.webp",
+        "BelAir4.webp",
+        "BelAir5.webp",
+        "BelAir6.webp"
+      ]
+    },
+    {
+      "id": 28,
+      "marca": "Jeep",
+      "modelo": "Renegade",
+      "color": "Verde",
+      "ano": 2019,
+      "km": 1723,
+      "precio": 13123,
+      "descripcion": "El mejor para las vacaciones",
+      "idEmpresa": 1,
+      "fotos": [
+        "Jeep1.webp",
+        "Jeep2.webp",
+        "Jeep3.webp",
+        "Jeep4.webp",
+        "Jeep5.webp",
+        "Jeep6.webp"
+      ]
+    }
+  ]
+  Response headers
+   content-type: application/json; chars

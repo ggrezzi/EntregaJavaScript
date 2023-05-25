@@ -138,7 +138,8 @@ function agregarAuto(){
 
     
     document.getElementById("accion").value="opcion";
-    getAuto();
+    fetchAutos();
+    //getAuto();
 
 }
 
@@ -156,9 +157,11 @@ function  quitarVehiculo () {
     newElement.setAttribute("id","textoMensaje");
     document.getElementById("temporal").appendChild(newElement);
     document.getElementById("textoMensaje").innerHTML="Vehiculo borrado";
-    getAuto();
+    fetchAutos();
+    //getAuto();
     document.getElementById("accion").value="opcion";
-    getAuto();
+    fetchAutos();
+    //getAuto();
 }
 
 function calculoFinanciacion(){
@@ -223,6 +226,7 @@ const getAuto = async () => {
 function cargarAutos(){
     //funcion que carga todas las cards de cada auto en el array listaAutos
     row=0;
+    fetchP();
     // recobrando la lista del localStorage para no perder los autos agregados.
     //listaAutos=JSON.parse(localStorage.getItem("lista"));
     for (let index = 0; index < listaAutos.length; index++) {
@@ -387,17 +391,21 @@ function financiacion () {
 function formAdmin(){
     //lista de opciones en admin
 
-    //Esto incluye "Reiniciar la lista a solamente los 2 autos por defecto"
-    //             "Agregar un auto"
+    //Esto incluye "Agregar un auto"
     //             "Borrar un auto"
 
     let opcion = document.getElementById("accion").value;
     switch (opcion) {
         case "opcion":
+            //Limpio la pantalla
             limpiarTemporal();
             break;
     
         case "agregar":
+            //creo el formulario para agregar un auto.
+            //en la parte de FOTOS, hay que ingresar el nombre general de los archivos y 
+            //el sistema automaticamente le agrega del 1 al 6 para que suban 6 fotos con el mismo nombre
+            //Ej: BMW1.JPG , BMW2.JPG. ETC...
             limpiarTemporal();
             newElement =  document.createElement("form") ;
             newElement.classList.add("agregarVehiculo");
@@ -554,6 +562,7 @@ function formAdmin(){
             break;
 
         case "borrar":
+            //Borro un auto X mandando el ID por API
             limpiarTemporal();
             newElement =  document.createElement("form") ;
             newElement.classList.add("quitarVehiculo");
@@ -631,4 +640,16 @@ function limpiarTemporal(){
     newElement =  document.createElement("div") ;
     newElement.setAttribute("id","temporal");
     document.getElementById("acciones").appendChild(newElement);
+}
+
+
+function fetchAutos(){
+    listaAutos = document.querySelector
+    fetch('data.json')
+        .then((res)=>res.json())
+        .then((data)=> {
+            data.foreach((vehiculo)=>{
+                listaAutos.add(vehiculo);
+            })
+        })
 }
