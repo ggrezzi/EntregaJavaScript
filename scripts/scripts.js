@@ -21,39 +21,41 @@ class Autos {
 let listaAutos=[];
 let code=""; 
 
-/*
+
 function inicio(){
     //funcion que reinicia la lista de autos (lo ideal seria sacar esta info de una DB,)
     //Esta funcion ya no es necesaria. La dejo comentada para no borrar trabajo hecho para entregas
     //anteriores.
-    listaAutos=JSON.parse(localStorage.getItem("lista"));
-    console.log(listaAutos);
-    if (listaAutos==null){
-        listaAutos=[];
-        //Esto va mientras no tenga acceso a archivos o DB en donde pueda guardar la lista de autos
-        fotos = [];
-        fotos.push("BelAir1.webp");
-        fotos.push("BelAir2.webp");
-        fotos.push("BelAir3.webp");
-        fotos.push("BelAir4.webp");
-        fotos.push("BelAir5.webp");
-        fotos.push("BelAir6.webp");
-        listaAutos.push(new Autos("Chevrolet", "BelAir", "Beige", 1956,248000, 12900, "motor y caja original 6 cilidros automatico , exelente estado",fotos)); 
-        fotos = [];
-        fotos.push("BMW5251.webp");
-        fotos.push("BMW5252.webp");
-        fotos.push("BMW5253.webp");
-        fotos.push("BMW5254.webp");
-        fotos.push("BMW5255.webp");
-        fotos.push("BMW5256.webp");
-        listaAutos.push(new Autos("BMW", "525", "Gris Oscuro", 2007,160000, 29900, "Bmw 525 i e60 paquete M de fábrica , excelente estado",fotos)); 
-        fotos = [];
+    if (listaAutos.lengh==0){
+        fetchP();
+        if (listaAutos==null){
+            listaAutos=[];
+            //Esto va mientras no tenga acceso a archivos o DB en donde pueda guardar la lista de autos
+            fotos = [];
+            fotos.push("BelAir1.webp");
+            fotos.push("BelAir2.webp");
+            fotos.push("BelAir3.webp");
+            fotos.push("BelAir4.webp");
+            fotos.push("BelAir5.webp");
+            fotos.push("BelAir6.webp");
+            listaAutos.push(new Autos("Chevrolet", "BelAir", "Beige", 1956,248000, 12900, "motor y caja original 6 cilidros automatico , exelente estado",fotos)); 
+            fotos = [];
+            fotos.push("BMW5251.webp");
+            fotos.push("BMW5252.webp");
+            fotos.push("BMW5253.webp");
+            fotos.push("BMW5254.webp");
+            fotos.push("BMW5255.webp");
+            fotos.push("BMW5256.webp");
+            listaAutos.push(new Autos("BMW", "525", "Gris Oscuro", 2007,160000, 29900, "Bmw 525 i e60 paquete M de fábrica , excelente estado",fotos)); 
+            fotos = [];
+        }
 
     }
-    console.log(listaAutos);
-    localStorage.setItem("lista",JSON.stringify(listaAutos));
+    
+    
+    
 }
-*/
+
 
 function agregarAuto(){
     
@@ -106,11 +108,12 @@ function agregarAuto(){
     //Agregando el nuevo objeto a la base de datos usando uan API POST
 
     const autoNuevo = new Autos(0,marca, modelo, color, ano,km, precio, texto,1,fotos);
-    console.log("Este es el auto nuevo:");
-    console.log(autoNuevo)
-    console.log("id empresa")
-    console.log(autoNuevo.idEmpresa);
-    var xhr = new XMLHttpRequest();
+    //console.log("Este es el auto nuevo:");
+    //console.log(autoNuevo)
+    //console.log("id empresa")
+    //console.log(autoNuevo.idEmpresa);
+    listaAutos.push(autoNuevo);
+    /*var xhr = new XMLHttpRequest();
     var url = "https://localhost:5001/api/Auto/add";
     xhr.open("POST", url, true);
     xhr.setRequestHeader("Content-Type", "application/json");
@@ -127,7 +130,7 @@ function agregarAuto(){
     console.log("data");
     console.log(data);
     xhr.send(data);
-
+    */
     //Aviso que el auto fue agregado satisfactoriamente a la base de datos.
     //No controlo si la API devuelve True or False ya que controlo todos los campos con javascript.
 
@@ -138,7 +141,8 @@ function agregarAuto(){
 
     
     document.getElementById("accion").value="opcion";
-    fetchAutos();
+    localStorage.setItem("lista",JSON.stringify(listaAutos));
+    //fetchAutos();
     //getAuto();
 
 }
@@ -149,19 +153,24 @@ function  quitarVehiculo () {
     //Quitamos el Auto seleccionado de la DB mandando el ID del mismo.
     //en la API directo quitamos tambien las fotos.
     let nroVehiculo=parseInt(document.getElementById("seleccionVehiculo").value);
-    fetch('https://localhost:5001/api/Auto/' + nroVehiculo,  {
-      method: 'DELETE'
-    })
-    limpiarTemporal();
+    //fetch('https://localhost:5001/api/Auto/' + nroVehiculo,  {
+    //  method: 'DELETE'
+    //})
+    
+    //limpiarTemporal();
     newElement =  document.createElement("p") ;
     newElement.setAttribute("id","textoMensaje");
     document.getElementById("temporal").appendChild(newElement);
     document.getElementById("textoMensaje").innerHTML="Vehiculo borrado";
-    fetchAutos();
+    console.log(nroVehiculo);
+    listaAutos.splice(nroVehiculo,1)
+    console.log(listaAutos) 
+    //fetchAutos();
     //getAuto();
     document.getElementById("accion").value="opcion";
-    fetchAutos();
+    //fetchAutos();
     //getAuto();
+    localStorage.setItem("lista",JSON.stringify(listaAutos));
 }
 
 function calculoFinanciacion(){
@@ -205,7 +214,7 @@ function calculoFinanciacion(){
     }
 }
 
-
+/*
 const getAuto = async () => {
     //funcion para recuperar la lista de autos desde la DB.
     //enviamos el IdEmpresa (en este caso 1) y recibimos todos los autos de la misma.
@@ -218,18 +227,19 @@ const getAuto = async () => {
     if (window.location.href.indexOf('productos.html')>0){
     cargarAutos()}
 }
-
+*/
 
 
 
 
 function cargarAutos(){
-    //funcion que carga todas las cards de cada auto en el array listaAutos
-    row=0;
     
+    //funcion que carga todas las cards de cada auto en el array listaAutos
+    row=0
     // recobrando la lista del localStorage para no perder los autos agregados.
-    //listaAutos=JSON.parse(localStorage.getItem("lista"));
+    listaAutos=JSON.parse(localStorage.getItem("lista"));
     for (let index = 0; index < listaAutos.length; index++) {
+        console.log("test");
         const tempAuto = listaAutos[index];
         //me agrego una ROW por cada 3 autos ya que cada tarjeta ocupa 4 cols de las 12 que van por pagina.
         if (index==0 || ((index)%3==0)){
@@ -393,7 +403,7 @@ function formAdmin(){
 
     //Esto incluye "Agregar un auto"
     //             "Borrar un auto"
-
+    listaAutos=JSON.parse(localStorage.getItem("lista"));
     let opcion = document.getElementById("accion").value;
     switch (opcion) {
         case "opcion":
@@ -577,7 +587,7 @@ function formAdmin(){
             for (let index = 0; index < listaAutos.length; index++) {
                 const element = listaAutos[index];
                 newElement =  document.createElement("option") ;
-                newElement.setAttribute("value",element.id);
+                newElement.setAttribute("value",index);
                 newElement.setAttribute("id","auto"+index);
                 document.getElementById("seleccionVehiculo").appendChild(newElement);
                 document.getElementById("auto"+index).innerHTML=element.marca+" "+element.modelo+" "+element.color;
@@ -645,19 +655,17 @@ function limpiarTemporal(){
 
 
 function fetchP(){
-    
+    if (listaAutos.length==0){
     //no tiene www. o https quiere decir que es una ruta relativa en local
     fetch('data.json')
         .then( (res) => res.json())
         //cuando yo ya recuperé el texto y lo convertí en objeto nuevamente (res.json)
         .then( (res) => {
+            localStorage.setItem("lista",JSON.stringify(res));
             res.forEach((producto) => {
                 listaAutos.push(producto);
             })
         })
-
-        listaAutos.forEach(element => {
-            console.log(element);
-        });
-    cargarAutos();
+    }
 }
+
