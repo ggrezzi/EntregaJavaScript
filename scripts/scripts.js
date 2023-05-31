@@ -1,8 +1,12 @@
 
 class Autos {
     //Clase Autos. Sera la clase de mis objetos autos.
-
     constructor (id,marca,modelo,color,ano,km,precio,descripcion,idEmpresa,fotos=[]){
+
+        //La clase contiene algunas propiedades que son para usar con una DB. 
+        //Como no tuve forma de pasar la DB y las APIS para consumir, pase a unJSON local
+        //pero no quise borrar las cosas de API ya que a la larga quiero usar este sitio
+        //consumiendo unas APIS que cree yo.
         this.id=id;
         this.marca=marca;
         this.modelo=modelo;
@@ -14,7 +18,6 @@ class Autos {
         this.idEmpresa=idEmpresa;
         this.fotos=fotos; //--> Array con los nombres de las fotos
     }
-
 }
 
 // inicializando las variables que voy a estar usando a lo largo de todo el codigo.
@@ -22,46 +25,12 @@ let listaAutos=[];
 let code=""; 
 
 
-function inicio(){
-    //funcion que reinicia la lista de autos (lo ideal seria sacar esta info de una DB,)
-    //Esta funcion ya no es necesaria. La dejo comentada para no borrar trabajo hecho para entregas
-    //anteriores.
-    if (listaAutos.lengh==0){
-        fetchP();
-        if (listaAutos==null){
-            listaAutos=[];
-            //Esto va mientras no tenga acceso a archivos o DB en donde pueda guardar la lista de autos
-            fotos = [];
-            fotos.push("BelAir1.webp");
-            fotos.push("BelAir2.webp");
-            fotos.push("BelAir3.webp");
-            fotos.push("BelAir4.webp");
-            fotos.push("BelAir5.webp");
-            fotos.push("BelAir6.webp");
-            listaAutos.push(new Autos("Chevrolet", "BelAir", "Beige", 1956,248000, 12900, "motor y caja original 6 cilidros automatico , exelente estado",fotos)); 
-            fotos = [];
-            fotos.push("BMW5251.webp");
-            fotos.push("BMW5252.webp");
-            fotos.push("BMW5253.webp");
-            fotos.push("BMW5254.webp");
-            fotos.push("BMW5255.webp");
-            fotos.push("BMW5256.webp");
-            listaAutos.push(new Autos("BMW", "525", "Gris Oscuro", 2007,160000, 29900, "Bmw 525 i e60 paquete M de fábrica , excelente estado",fotos)); 
-            fotos = [];
-        }
-
-    }
-    
-    
-    
-}
-
 
 function agregarAuto(){
     
-    //Funcion para agregar autos a la base de datos.
+    //Funcion para agregar autos a la lista de vehiculos
     //Agarramos toda la informacio del formulario presentado.
-    //el ID del auto lo creo con valor 0 ya que ese se numera automaticamente
+    //el ID del auto lo creo con valor 0 ya que ese se numera automaticamente (cuand usamos la API)
     //al instertar el auto en la DB.
     //El valor de IdEmpresa lo fuerzo a que sea 1 ya que es la unica empresa
     //con la que por ahora estamos trabajando. (La idea gral es que este backend y DB pueda ser
@@ -108,11 +77,9 @@ function agregarAuto(){
     //Agregando el nuevo objeto a la base de datos usando uan API POST
 
     const autoNuevo = new Autos(0,marca, modelo, color, ano,km, precio, texto,1,fotos);
-    //console.log("Este es el auto nuevo:");
-    //console.log(autoNuevo)
-    //console.log("id empresa")
-    //console.log(autoNuevo.idEmpresa);
     listaAutos.push(autoNuevo);
+
+    //comentando los comandos para agregar por API y dejando habilitado el uso del local storage
     /*var xhr = new XMLHttpRequest();
     var url = "https://localhost:5001/api/Auto/add";
     xhr.open("POST", url, true);
@@ -133,20 +100,45 @@ function agregarAuto(){
     */
     //Aviso que el auto fue agregado satisfactoriamente a la base de datos.
     //No controlo si la API devuelve True or False ya que controlo todos los campos con javascript.
-
+    //Pop up usando libreria SweetAlert
     newElement = document.createElement("p");
     newElement.setAttribute("id","textoAceptar")
     document.getElementById("agregarVehiculo").appendChild(newElement);
     document.getElementById("textoAceptar").innerHTML="El nuevo Vehiculo ha sido agregado";
-
-    
+    Swal.fire({
+        title: 'Exito',
+        html: '<div class="card1 card">'+
+        '<div class="carousel slide" id="carousel1">'+
+          '<div class="carousel-inner" id="inner1">'+
+            '<div class="carousel-item active" id="foto0auto1"><img class="d-block w-100" src="../img/'+autoNuevo.fotos[0]+'" height="250px"></div>'+
+            '<div class="carousel-item" id="foto1auto1"><img class="d-block w-100" src="../img/'+autoNuevo.fotos[1]+'" height="250px"></div>'+
+            '<div class="carousel-item" id="foto2auto1"><img class="d-block w-100" src="../img/'+autoNuevo.fotos[2]+'" height="250px"></div>'+
+            '<div class="carousel-item" id="foto3auto1"><img class="d-block w-100" src="../img/'+autoNuevo.fotos[3]+'" height="250px"></div>'+
+            '<div class="carousel-item" id="foto4auto1"><img class="d-block w-100" src="../img/'+autoNuevo.fotos[4]+'" height="250px"></div>'+
+            '<div class="carousel-item" id="foto5auto1"><img class="d-block w-100" src="../img/'+autoNuevo.fotos[5]+'" height="250px"></div>'+
+          '</div>'+
+          '<button class="carousel-control-prev" type="button" data-bs-target="#carousel1" data-bs-slide="prev" id="botonPrev1">'+
+            '<span class="carousel-control-prev-icon" aria-hidden="true"></span>'+
+            '<span class="visually-hidden">Anterior</span>'+
+          '</button>'+
+          '<button class="carousel-control-next" type="button" data-bs-target="#carousel1" data-bs-slide="next" id="botonNext1">'+
+            '<span class="carousel-control-next-icon" aria-hidden="true"></span>'+
+            '<span class="visually-hidden">Siguiente</span>'+
+          '</button>'+
+        '</div>'+
+        '<div class="card-body d-flex flex-column" id="texto1">'+
+          '<h5 class="card-title">'+autoNuevo.marca+ ' '+autoNuevo.modelo+'</h5>'+
+          '<p class="card-title mb-4" id="datosAuto1">Color: '+autoNuevo.color+'<br>Año: '+autoNuevo.ano+'<br>KM: '+autoNuevo.km+'<br>Precio: '+autoNuevo.precio+'<br>'+autoNuevo.descripcion+'</p>'+
+      '</div>',
+        showCloseButton: true,
+        focusConfirm: false,
+        confirmButtonText:
+          '<i class="fa fa-thumbs-up"></i> Aceptar',
+        confirmButtonAriaLabel: 'Thumbs up, great!',
+      })
     document.getElementById("accion").value="opcion";
     localStorage.setItem("lista",JSON.stringify(listaAutos));
-    //fetchAutos();
-    //getAuto();
-
 }
-
 
 function  quitarVehiculo () {
 
@@ -158,6 +150,8 @@ function  quitarVehiculo () {
     //})
     
     //limpiarTemporal();
+
+    
     newElement =  document.createElement("p") ;
     newElement.setAttribute("id","textoMensaje");
     document.getElementById("temporal").appendChild(newElement);
@@ -165,12 +159,13 @@ function  quitarVehiculo () {
     console.log(nroVehiculo);
     listaAutos.splice(nroVehiculo,1)
     console.log(listaAutos) 
-    //fetchAutos();
-    //getAuto();
     document.getElementById("accion").value="opcion";
-    //fetchAutos();
-    //getAuto();
     localStorage.setItem("lista",JSON.stringify(listaAutos));
+    limpiarTemporal()
+    Swal.fire(
+        'Vehiculo Eliminado!',
+        'success'
+      )
 }
 
 function calculoFinanciacion(){
@@ -644,14 +639,13 @@ function formAdmin(){
 }
 
 function limpiarTemporal(){
-    var parent = document.getElementById("acciones");
-    var child = document.getElementById("temporal");
+    let parent = document.getElementById("acciones");
+    let child = document.getElementById("temporal");
     parent.removeChild(child);
     newElement =  document.createElement("div") ;
     newElement.setAttribute("id","temporal");
     document.getElementById("acciones").appendChild(newElement);
 }
-
 
 
 function fetchP(){
@@ -668,4 +662,7 @@ function fetchP(){
         })
     }
 }
+
+
+
 
