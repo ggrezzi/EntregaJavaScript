@@ -24,7 +24,7 @@ class Autos {
 let listaAutos=[];
 let code=""; 
 fetchP()
-localStorage.setItem("lista",JSON.stringify(listaAutos));
+
 
 
 
